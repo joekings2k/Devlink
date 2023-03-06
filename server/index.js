@@ -10,6 +10,7 @@ import {dbConnect} from "./dbConnect.js"
 
 import authRoutes from "./routes/authRoutes.js";
 import usersRoutes from "./routes/userRoutes.js";
+import postRoutes from "./routes/postRoutes.js";
 
 const port = process.env.PORT
 const __filename = fileURLToPath(import.meta.url)
@@ -28,6 +29,7 @@ dbConnect()
 
 app.use("/auth",authRoutes)
 app.use("/users",usersRoutes)
+app.use ("/posts",postRoutes)
 
 
 app.listen(port ,()=>{
