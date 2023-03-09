@@ -25,6 +25,7 @@ import { setMode, setLogout, AppState } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
+
 export const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ export const Navbar = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const theme = useTheme();
-  const neutralLight = theme.palette.backgrounds
+  const neutralLight = theme.palette.backgrounds.default
   console.log(neutralLight);
 
   return (
