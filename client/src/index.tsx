@@ -7,7 +7,7 @@ import { persistStore } from "redux-persist";
 
 import { Provider } from "react-redux";
 import {store} from "state/reduxpesisit"
-
+import {StyledEngineProvider} from "@mui/material/styles"
 
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -18,7 +18,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistStore(store)}>
-        <App />
+        <StyledEngineProvider injectFirst>
+          <App />
+        </StyledEngineProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>

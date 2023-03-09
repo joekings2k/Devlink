@@ -3,7 +3,7 @@ import {createSlice} from "@reduxjs/toolkit"
 
 
 
-interface AppState {
+export interface AppState {
   mode:string,
   user:any,
   token:string|null,
