@@ -16,35 +16,7 @@ import { colorTokens, themeSettings } from "theme";
 import { AppState } from "state";
 // import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";
-import * as mui from "@mui/material/styles/createPalette";
-declare module "@mui/material/styles" {
-  // interface Theme {
-  //   mode: "dark";
-  // }
-  interface Theme{
-    palette:{
-      backgrounds:{
-        alt:string,
-        default:string
-      }
-    }
-  }
-  interface Palette {
-    neutral: Palette["primary"];
-    backgrounds: Palette["background"];
-  }
-  // interface PaletteColor {
-  //   alt?: string;
-  // }
-  // interface paletteColorOptions {
-  //   alt?: string;
-  // }
-  interface PaletteOptions {
-    neutral: PaletteOptions["primary"];
-    backgrounds: PaletteOptions["background"];
-    // alt:paletteColorOptions["alt"]
-  }
-}
+
 
 
 function App() {

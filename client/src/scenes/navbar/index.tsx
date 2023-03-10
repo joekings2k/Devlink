@@ -34,7 +34,7 @@ export const Navbar = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   const theme = useTheme();
-  const neutralLight = theme.palette.backgrounds.default
+  const neutralLight = theme.palette.neutral.light
   console.log(neutralLight);
 
   return (
