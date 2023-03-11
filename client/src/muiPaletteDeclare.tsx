@@ -3,6 +3,7 @@ declare module "@mui/material/styles" {
   
   interface Theme {
     palette: {
+      mode:string;
       primary: {
         dark: React.CSSProperties["color"];
         main: React.CSSProperties["color"];
