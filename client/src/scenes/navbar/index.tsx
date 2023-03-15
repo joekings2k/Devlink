@@ -41,7 +41,7 @@ export const Navbar = () => {
   const alt = theme.palette.backgrounds.alt;
   const fullName = `${user?.firstName} ${user?.lastName}`;
   return (
-    <FlexBetween padding="1rem 6%" style={{ backgroundColor: alt }}>
+    <FlexBetween padding="1rem 6%" style={{ backgroundColor: neutralLight }}>
       <FlexBetween gap="1.75rem">
         <Typography
           fontWeight="bold"
