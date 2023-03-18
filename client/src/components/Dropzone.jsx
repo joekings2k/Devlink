@@ -6,15 +6,18 @@ import {IconButton} from "@mui/material"
 import { useTheme} from "@mui/material"
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
-export const Dropzone = () => {
+export const Dropzone = (props) => {
 
   const theme = useTheme()
+  const {setFieldValue} =props
 
   const {palette}= theme
 
   const [files, setFiles] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
     if (acceptedFiles?.length) {
+      setFieldValue("picture",acceptedFiles[0])
+      props.setFile([acceptedFiles[0]])
       setFiles((previousFiles) => [
         ...previousFiles,
         ...acceptedFiles.map((file) =>
@@ -23,12 +26,12 @@ export const Dropzone = () => {
       ]);
     }
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop,multiple:true });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop,multiple:false });
 
 
   const removePic =(name)=>{
     setFiles(files.filter((file)=>(file.name!== name )))
-    console.log("helloe world")
+
   }
 
   const image = files.map((file) => (
@@ -53,7 +56,12 @@ export const Dropzone = () => {
       style={{ display: "flex", justifyContent: "center" }}
     >
       <EditOutlinedIcon />
-      <input {...getInputProps()} />
+      <input
+        {...getInputProps()}
+        type="file"
+        name="picture"
+        
+      />
       {isFileEmpty ? (
         <>
           {isDragActive ? (

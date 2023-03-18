@@ -45,7 +45,7 @@ const registerSchema = yup.object().shape({
     .oneOf([yup.ref("password")]),
   location: yup.string().required("required"),
   occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+  picture: yup.mixed().required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -71,6 +71,7 @@ const initialValueLogin: FormValuesLogin = {
 
 export const Form = () => {
   const [pageType, setPageType] = useState<string>("register");
+  const [profilePic, setProfilePic] = useState(null);
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -78,10 +79,55 @@ export const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
+  const register = async (values: any, onSubmitProps: any) => {
+    const formData = new FormData();
+    for (let value in values) {
+      formData.append(value, values[value]);
+    }
+    formData.append("picture", values.picture.name);
+
+    const savedUserResponse = await fetch(
+      "http://localhost:3001/auth/register",
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+    const savedUser = await savedUserResponse.json();
+    onSubmitProps.resetForm();
+    if (savedUser) {
+      setPageType("login");
+    }
+    console.log(formData);
+  };
+
+  const login = async (values: any, onSubmitProps: any) => {
+    const loggedInUserResponse = await fetch(
+      "http://localhost:3001/auth/login",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      }
+    );
+    const loggedIn = await loggedInUserResponse.json();
+    onSubmitProps.resetForm();
+    if (loggedIn) {
+      dispatch(setLogin({
+        user:loggedIn.user,
+        token:loggedIn.token,
+      }))
+      navigate("/home")
+    }
+  };
+
   const handleFormSubmit = async (
     values: FormValuesRegister | FormValuesLogin,
-    onsubmitProps: any
-  ) => {};
+    onSubmitProps: any
+  ) => {
+    if (isLogin) await login(values, onSubmitProps);
+    if (isRegister) await register(values, onSubmitProps);
+  };
 
   return (
     <div>
@@ -133,7 +179,7 @@ export const Form = () => {
                     label="Last Name"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={console.log(values.lastName)}
+                    value={values.lastName}
                     name="lastName"
                     error={
                       Boolean(touched.lastName) && Boolean(errors.lastName)
@@ -145,7 +191,7 @@ export const Form = () => {
                     label="Location"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={console.log(values.location)}
+                    value={values.location}
                     name="location"
                     error={
                       Boolean(touched.location) && Boolean(errors.location)
@@ -157,7 +203,7 @@ export const Form = () => {
                     label="Occupation"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={console.log(values.occupation)}
+                    value={values.occupation}
                     name="occupation"
                     error={
                       Boolean(touched.occupation) && Boolean(errors.occupation)
@@ -172,23 +218,27 @@ export const Form = () => {
                     p="1rem"
                   >
                     {/* put dropzone here */}
-                    <Dropzone />
+                    <Dropzone
+                      setFile={setProfilePic}
+                      setFieldValue={setFieldValue}
+                    />
                   </Box>
                   <TextField
                     label="Email"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={console.log(values.email)}
+                    value={values.email}
                     name="email"
                     error={Boolean(touched.email) && Boolean(errors.email)}
                     helperText={touched.email && errors.email}
                     sx={{ gridColumn: "span 4" }}
                   />
                   <TextField
+                    type="password"
                     label="Password"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={console.log(values.password)}
+                    value={values.password}
                     name="password"
                     error={
                       Boolean(touched.password) && Boolean(errors.password)
@@ -197,10 +247,11 @@ export const Form = () => {
                     sx={{ gridColumn: "span 4" }}
                   />
                   <TextField
+                    type="password"
                     label="Confirm Password"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    value={console.log(values.confirmPassword)}
+                    value={values.confirmPassword}
                     name="confirmPassword"
                     error={
                       Boolean(touched.confirmPassword) &&
@@ -236,12 +287,12 @@ export const Form = () => {
                           textDecoration: "underline",
                           color: palette.primary.main,
                           "&:hover": {
-                            cursor:"pointer",
-                            color:palette.primary.light
+                            cursor: "pointer",
+                            color: palette.primary.light,
                           },
                         }}
                       >
-                        Already have an account?Click to sign in 
+                        Already have an account?Click to sign in
                       </Typography>
                     </span>
                   </Box>
@@ -251,6 +302,7 @@ export const Form = () => {
           )}
         </Formik>
       )}
+
       {isLogin && (
         <Formik
           onSubmit={handleFormSubmit}
@@ -283,22 +335,57 @@ export const Form = () => {
                   label="Email"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={console.log(values.email)}
+                  value={values.email}
                   name="email"
                   error={Boolean(touched.email) && Boolean(errors.email)}
                   helperText={touched.email && errors.email}
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
+                  type="password"
                   label="Password"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={console.log(values.password)}
+                  value={values.password}
                   name="password"
                   error={Boolean(touched.password) && Boolean(errors.password)}
                   helperText={touched.password && errors.password}
                   sx={{ gridColumn: "span 4" }}
                 />
+              </Box>
+              <Box sx={{ width: "100%", gridColumn: "span 4" }}>
+                <Button
+                  fullWidth
+                  type="submit"
+                  sx={{
+                    m: "2rem 0",
+                    p: "1rem",
+                    backgroundColor: palette.primary.main,
+                    color: palette.backgrounds.alt,
+                    "&:hover": { color: palette.primary.main },
+                  }}
+                >
+                  Login
+                </Button>
+                <span
+                  onClick={() => {
+                    setPageType("register");
+                    resetForm();
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textDecoration: "underline",
+                      color: palette.primary.main,
+                      "&:hover": {
+                        cursor: "pointer",
+                        color: palette.primary.light,
+                      },
+                    }}
+                  >
+                    Dont have an account ?Click to register
+                  </Typography>
+                </span>
               </Box>
             </form>
           )}

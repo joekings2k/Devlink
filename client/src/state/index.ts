@@ -1,6 +1,4 @@
-import {createSlice} from "@reduxjs/toolkit"
-
-
+import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 
 
 export interface AppState {
@@ -23,7 +21,7 @@ export const authSlice =createSlice({
     setMode:(state:AppState)=>{
       state.mode =state.mode ==="light"?"dark" : "light"
     },
-    setLogin :(state:AppState,action:any)=>{
+    setLogin :(state:AppState,action:PayloadAction<{user:any;token:string|null}>)=>{
       state.user = action.payload.user
       state.token = action.payload.user
     },
