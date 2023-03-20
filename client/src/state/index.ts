@@ -1,6 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
 
-
 export interface AppState {
   mode:string,
   user:any,
@@ -28,6 +27,7 @@ export const authSlice =createSlice({
     setLogout :(state:AppState)=>{
       state.user=null
       state.token =null
+      
     },
     setFriends :(state:AppState ,action:any)=>{
       if(state.user){

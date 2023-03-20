@@ -25,7 +25,6 @@ import { setMode, setLogout, AppState } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
 
-
 export const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -40,6 +39,11 @@ export const Navbar = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.backgrounds.alt;
   const fullName = `${user?.firstName} ${user?.lastName}`;
+
+  const navigateLogin =()=>{
+    dispatch(setLogout());
+    navigate("/")
+  }
   return (
     <FlexBetween padding="1rem 6%" style={{ backgroundColor: neutralLight }}>
       <FlexBetween gap="1.75rem">
@@ -73,7 +77,7 @@ export const Navbar = () => {
       </FlexBetween>
       {isNonMobileScreens ? (
         <FlexBetween gap="2rem">
-          <IconButton onClick={() => dispatch(setMode())}>
+          <IconButton onClick={() =>  dispatch(setMode())}>
             {theme.palette.mode === "dark" ? (
               <DarkMode sx={{ fontSize: "22px" }} />
             ) : (
@@ -103,14 +107,18 @@ export const Navbar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>LogOut</MenuItem>
+              <MenuItem onClick={() => navigateLogin()}>LogOut</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
       ) : (
         <IconButton
           onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
-          sx={{ borderRadius: "50%", p: "10px",boxShadow:`3px 2px 3px ${background} ` }}
+          sx={{
+            borderRadius: "50%",
+            p: "10px",
+            boxShadow: `3px 2px 3px ${background} `,
+          }}
         >
           <Menu />
         </IconButton>
@@ -173,7 +181,7 @@ export const Navbar = () => {
                 <MenuItem value={fullName}>
                   <Typography>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>
+                <MenuItem onClick={() => navigateLogin()}>
                   LogOut
                 </MenuItem>
               </Select>

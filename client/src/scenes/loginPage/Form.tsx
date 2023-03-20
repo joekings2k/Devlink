@@ -70,7 +70,7 @@ const initialValueLogin: FormValuesLogin = {
 };
 
 export const Form = () => {
-  const [pageType, setPageType] = useState<string>("register");
+  const [pageType, setPageType] = useState<string>("login");
   const [profilePic, setProfilePic] = useState(null);
   const { palette } = useTheme();
   const dispatch = useDispatch();
