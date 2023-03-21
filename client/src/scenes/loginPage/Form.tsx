@@ -17,6 +17,7 @@ import { setLogin } from "state";
 import { Dropzone } from "components/Dropzone";
 import FlexBetween from "components/FlexBetween";
 import { color } from "@mui/system";
+import { Token } from "@mui/icons-material";
 
 interface FormValuesRegister {
   firstName: string;
@@ -111,6 +112,7 @@ export const Form = () => {
       }
     );
     const loggedIn = await loggedInUserResponse.json();
+    console.log(loggedIn)
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(setLogin({

@@ -22,7 +22,7 @@ export const authSlice =createSlice({
     },
     setLogin :(state:AppState,action:PayloadAction<{user:any;token:string|null}>)=>{
       state.user = action.payload.user
-      state.token = action.payload.user
+      state.token = action.payload.token
     },
     setLogout :(state:AppState)=>{
       state.user=null

@@ -4,6 +4,7 @@ import {
   Route,
   Link,
   RouterProvider,
+  Navigate,
 } from "react-router-dom";
 import { Root } from "Root";
 import { HomePage } from "scenes/homePage/index";
@@ -20,19 +21,31 @@ import { CssBaseline } from "@mui/material";
 
 
 function App() {
+  const mode: string = useSelector((state: AppState) => state.mode);
+
+  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+
+  const isAuth = Boolean(useSelector((state: AppState) => state.token));
+
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
         <Route index element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/profile/:userId" element={<ProfilePage />} />
+        <Route
+          path="/home"
+          element={isAuth ? <HomePage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/profile/:userId"
+          element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+        />
       </Route>
     )
   );
 
-  const mode: string = useSelector((state: AppState) => state.mode);
 
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  
 
   return (
     <ThemeProvider theme={theme}>
