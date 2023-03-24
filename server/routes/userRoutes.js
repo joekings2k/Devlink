@@ -6,7 +6,7 @@ import {verifyToken} from "../middleware/auth.js"
 const usersRoutes = express.Router();
 
 /*  get routes */
-usersRoutes.get("/:id",getUser)
+usersRoutes.get("/:id",verifyToken,getUser)
 usersRoutes.get("/:id/friends",verifyToken,getUserFriends)
 
 /*  patch route to update the data base */

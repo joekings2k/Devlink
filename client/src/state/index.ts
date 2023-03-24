@@ -1,54 +1,68 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+interface postState {
+  _id: string;
+  userId: string;
+  firstName: string;
+  lastName: string;
+  location: string;
+  description: string;
+  likes: { userId: string };
+  comments: [];
+  picture: { public_id: string; secure_url: string };
+  userPicture: { public_id: string; secure_url: string };
+}
 
 export interface AppState {
-  mode:string,
-  user:any,
-  token:string|null,
-  posts:any[],
+  mode: string;
+  user: any;
+  token: string | null;
+  posts: postState[];
 }
-const initialState:AppState ={
-  mode:"light",
-  user:null,
-  token:null,
-  posts:[]
-}
+const initialState: AppState = {
+  mode: "light",
+  user: null,
+  token: null,
+  posts: [],
+};
 
-export const authSlice =createSlice({
-  name:"auth",
+export const authSlice = createSlice({
+  name: "auth",
   initialState,
-  reducers:{
-    setMode:(state:AppState)=>{
-      state.mode =state.mode ==="light"?"dark" : "light"
+  reducers: {
+    setMode: (state: AppState) => {
+      state.mode = state.mode === "light" ? "dark" : "light";
     },
-    setLogin :(state:AppState,action:PayloadAction<{user:any;token:string|null}>)=>{
-      state.user = action.payload.user
-      state.token = action.payload.token
+    setLogin: (
+      state: AppState,
+      action: PayloadAction<{ user: any; token: string | null }>
+    ) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
-    setLogout :(state:AppState)=>{
-      state.user=null
-      state.token =null
-      
+    setLogout: (state: AppState) => {
+      state.user = null;
+      state.token = null;
     },
-    setFriends :(state:AppState ,action:any)=>{
-      if(state.user){
-        state.user.friends  = action.payload.friends
-      }else{
+    setFriends: (state: AppState, action: any) => {
+      if (state.user) {
+        state.user.friends = action.payload.friends;
+      } else {
         console.log("user non-existent ");
-        
       }
     },
-    setPosts:(state:AppState,action:any)=>{
-      state.posts= action.payload.posts
+    setPosts: (state: AppState, action: PayloadAction<{posts:any}>) => {
+      state.posts = action.payload.posts;
     },
-    setPost: (state:AppState,action:any)=>{
-      const updatedPosts = state.posts.map((post)=>{
-        if(post._id === action.payload.post_id) return action.payload.post
-        return post
-      })
-      state.posts=updatedPosts
-    }
-  }
-})
+    setPost: (state: AppState, action: any) => {
+      const updatedPosts = state.posts.map((post) => {
+        if (post._id === action.payload.post_id) return action.payload.post;
+        return post;
+      });
+      state.posts = updatedPosts;
+    },
+  },
+});
 
-export const {setMode,setLogin,setLogout,setFriends,setPosts,setPost}=authSlice.actions
-export default authSlice.reducer
+export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
+  authSlice.actions;
+export default authSlice.reducer;
