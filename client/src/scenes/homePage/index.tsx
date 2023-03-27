@@ -6,7 +6,7 @@ import { MyPostWidget } from "scenes/widgets/MyPostWidget";
 export const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picture } = useSelector((state: AppState) => state.user);
-  console.log(_id);
+  
   
 
   return (

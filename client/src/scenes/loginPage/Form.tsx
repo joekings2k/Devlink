@@ -6,8 +6,8 @@ import {
   useMediaQuery,
   Typography,
   useTheme,
+  InputBase,
 } from "@mui/material";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
@@ -15,9 +15,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 // import Dropzone from "react-dropzone";
 import { Dropzone } from "components/Dropzone";
-import FlexBetween from "components/FlexBetween";
-import { color } from "@mui/system";
-import { Token } from "@mui/icons-material";
+
 
 interface FormValuesRegister {
   firstName: string;
@@ -99,7 +97,6 @@ export const Form = () => {
     if (savedUser) {
       setPageType("login");
     }
-    console.log(formData);
   };
 
   const login = async (values: any, onSubmitProps: any) => {
@@ -112,7 +109,6 @@ export const Form = () => {
       }
     );
     const loggedIn = await loggedInUserResponse.json();
-    console.log(loggedIn)
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(setLogin({

@@ -38,16 +38,14 @@ export const UserWidget = ({
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
-  console.log(user)
   const getUser = async () => {
     const response = await fetch(`http://localhost:3001/users/${userId}`, {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response);
     
     const data = await response.json();
-    console.log(data);
+   
     setUser(data);
   };
 
