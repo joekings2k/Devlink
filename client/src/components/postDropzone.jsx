@@ -39,7 +39,7 @@ export const PostDropzone = ({setImage, imagee}) => {
   // ))
 
   
-  const isImageeEmpty = imagee?.length===0
+  const isImageeEmpty = imagee===null
 
   return (
     <Box

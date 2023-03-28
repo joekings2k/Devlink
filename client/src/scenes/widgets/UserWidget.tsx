@@ -66,7 +66,7 @@ export const UserWidget = ({
     friends,
   }: UserData = user;
   return (
-    <WidgetWrapper>
+    <WidgetWrapper >
       <FlexBetween
         gap="0.5rem"
         pb="1.1rem"
