@@ -11,6 +11,14 @@ interface postState {
   picture: { public_id: string; secure_url: string };
   userPicture: { public_id: string; secure_url: string };
 }
+interface UserState {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  location: string;
+  picture: {};
+  occupation: String;
+}
 
 export interface AppState {
   mode: string;
@@ -43,7 +51,7 @@ export const authSlice = createSlice({
       state.user = null;
       state.token = null;
     },
-    setFriends: (state: AppState, action: any) => {
+    setFriends: (state: AppState, action:PayloadAction<{friends:UserState}>) => {
       if (state.user) {
         state.user.friends = action.payload.friends;
       } else {
