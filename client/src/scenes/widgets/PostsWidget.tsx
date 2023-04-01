@@ -25,7 +25,8 @@ export const PostsWidget =({userId,isProfile =false }:PostsWidgetProps)=>{
   const Posts = useSelector((state: AppState) => state.posts);
   const token = useSelector((state: AppState) => state.token);
 
-  console.log(Posts)
+
+    
   
   const getPosts = async () => {
     
@@ -47,8 +48,6 @@ export const PostsWidget =({userId,isProfile =false }:PostsWidgetProps)=>{
       }
     );
     const data = await response.json();
-    console.log(data)
-    
     dispatch(setPosts({ posts: data }));
   };
   

@@ -11,7 +11,7 @@ import WidgetWrapper from "components/WidgetWrapper";
 import { Friend } from "./Friend";
 import { useDispatch, useSelector } from "react-redux";
 import { AppState, setPost } from "state";
-import { useNavigate } from "react-router-dom";
+
 
 interface PostWidgetProps {
   postId: string;
@@ -52,12 +52,13 @@ export const PostWidget = ({
     const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
-        Authorzation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ userId: loggedInUserId }),
     });
     const updatedPost = await response.json();
+    console.log(updatedPost)
     dispatch(setPost({ post: updatedPost }));
   };
 
@@ -95,7 +96,7 @@ export const PostWidget = ({
             <Typography>{likedCount}</Typography>
           </FlexBetween>
 
-          {/*  for commnet section */}
+          {/*  for comment section */}
           <FlexBetween gap="0.3rem">
             <IconButton onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />

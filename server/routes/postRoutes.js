@@ -14,7 +14,7 @@ postRoutes.get("/:userId/posts",verifyToken,getUserPosts) //this route is for a 
 postRoutes.post("/",upload.single("picture"),CreatePost)
 
 /* UPDATE */ 
-postRoutes.patch("/:id/like",verifyToken,likePost)
+postRoutes.patch("/:id/like",likePost)
 
 export default postRoutes
 
