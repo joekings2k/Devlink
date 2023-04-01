@@ -102,7 +102,7 @@ export const UserWidget = ({
         </Box>
         <Box display="flex" alignItems="center" gap="1rem">
           <WorkOutlineOutlined fontSize="large" sx={{ color: main }} />
-          <Typography color={medium}>{location}</Typography>
+          <Typography color={medium}>{occupation}</Typography>
         </Box>
       </Box>
       <Divider />
