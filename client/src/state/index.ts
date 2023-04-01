@@ -6,7 +6,7 @@ interface postState {
   lastName: string;
   location: string;
   description: string;
-  likes: { userId: string };
+  likes: { [userId: string]:boolean };
   comments: [];
   picture: { public_id: string; secure_url: string };
   userPicture: { public_id: string; secure_url: string };
@@ -51,17 +51,20 @@ export const authSlice = createSlice({
       state.user = null;
       state.token = null;
     },
-    setFriends: (state: AppState, action:PayloadAction<{friends:UserState}>) => {
+    setFriends: (
+      state: AppState,
+      action: PayloadAction<{ friends: UserState }>
+    ) => {
       if (state.user) {
         state.user.friends = action.payload.friends;
       } else {
         console.log("user non-existent ");
       }
     },
-    setPosts: (state: AppState, action: PayloadAction<{posts:any}>) => {
+    setPosts: (state: AppState, action: PayloadAction<{ posts: any }>) => {
       state.posts = action.payload.posts;
     },
-    setPost: (state: AppState, action: any) => {
+    setPost: (state: AppState, action: PayloadAction<{ post?: any ; post_id?:any }>) => {
       const updatedPosts = state.posts.map((post) => {
         if (post._id === action.payload.post_id) return action.payload.post;
         return post;

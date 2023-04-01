@@ -7,7 +7,7 @@ const postRoutes = express.Router()
 
 /* READ */
 
-postRoutes.get("/", verifyToken,getFeedPosts) //this route is for all the posts
+postRoutes.get("/",verifyToken,getFeedPosts) //this route is for all the posts
 postRoutes.get("/:userId/posts",verifyToken,getUserPosts) //this route is for a specific users posts
 
 /* WRITE */ 
