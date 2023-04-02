@@ -4,7 +4,8 @@ import { AppState} from "state";
 import { useMediaQuery, Box } from "@mui/material";
 import { MyPostWidget } from "scenes/widgets/MyPostWidget";
 import { PostsWidget } from "scenes/widgets/PostsWidget";
-import {useEffect} from "react"
+import { AdvertWidget } from "scenes/widgets/AdvertWidget";
+import { FriendListWidget } from "scenes/widgets/FriendListWidget";
 export const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const { _id, picture } = useSelector((state: AppState) => state.user);
@@ -29,7 +30,13 @@ export const HomePage = () => {
           <MyPostWidget picture={picture.secure_url}></MyPostWidget>
           <PostsWidget userId={_id} />
         </Box>
-        {isNonMobileScreens && <Box flexBasis="26%"></Box>}
+        {isNonMobileScreens &&(<Box flexBasis="26%">
+          <AdvertWidget/>
+          <Box m="2rem 0"/>
+          <FriendListWidget userId={_id} />
+          </Box>
+
+          )}
       </Box>
     </Box>
   );

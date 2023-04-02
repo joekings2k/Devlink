@@ -7,7 +7,7 @@ const usersRoutes = express.Router();
 
 /*  get routes */
 usersRoutes.get("/:id",verifyToken,getUser)
-usersRoutes.get("/:id/friends",verifyToken,getUserFriends)
+usersRoutes.get("/:id/friends",getUserFriends)
 
 /*  patch route to update the data base */
 usersRoutes.patch("/:id/:friendsId",verifyToken,addRemoveFriend)

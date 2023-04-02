@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react"
-import { useDispatch, useSelector } from "react-redux"
-import {AppState, setPosts} from "state"
-import { PostWidget } from "./PostWidget"
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppState, setPosts } from "state";
+import { PostWidget } from "./PostWidget";
 
-interface PostsWidgetProps{
-  userId ?:string ;
-  isProfile? :Boolean;
+interface PostsWidgetProps {
+  userId?: string;
+  isProfile?: Boolean;
 }
 interface PostMapContent {
   _id: string;
@@ -20,25 +20,23 @@ interface PostMapContent {
   comments: [];
 }
 
-export const PostsWidget =({userId,isProfile =false }:PostsWidgetProps)=>{
+export const PostsWidget = ({
+  userId,
+  isProfile = false,
+}: PostsWidgetProps) => {
   const dispatch = useDispatch();
   const Posts = useSelector((state: AppState) => state.posts);
   const token = useSelector((state: AppState) => state.token);
 
-
-    
-  
   const getPosts = async () => {
-    
-    const response = await fetch("http://localhost:3001/posts",
-     {
+    const response = await fetch("http://localhost:3001/posts", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
   };
-  
+
   const getUserPosts = async () => {
     const response = await fetch(
       `http://localhost:3001/posts/${userId}/posts`,
@@ -50,7 +48,6 @@ export const PostsWidget =({userId,isProfile =false }:PostsWidgetProps)=>{
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
   };
-  
 
   useEffect(() => {
     if (isProfile) {
@@ -59,7 +56,7 @@ export const PostsWidget =({userId,isProfile =false }:PostsWidgetProps)=>{
       getPosts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+  }, []);
 
   return (
     <>
@@ -92,4 +89,4 @@ export const PostsWidget =({userId,isProfile =false }:PostsWidgetProps)=>{
       )}
     </>
   );
-}
+};
