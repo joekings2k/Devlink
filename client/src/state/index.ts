@@ -7,7 +7,7 @@ interface postState {
   location: string;
   description: string;
   likes: { [userId: string]:boolean };
-  comments: [];
+  Comments: [];
   picture: { public_id: string; secure_url: string };
   userPicture: { public_id: string; secure_url: string };
 }

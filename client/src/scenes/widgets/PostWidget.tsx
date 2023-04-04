@@ -4,7 +4,7 @@ import {
   FavoriteOutlined,
   ShareOutlined,
 } from "@mui/icons-material";
-import { Box, Divider, IconButton, Typography, useTheme } from "@mui/material";
+import { Box, Button, Divider, IconButton, InputBase, Typography, useTheme } from "@mui/material";
 import FlexBetween from "components/FlexBetween";
 import { useState } from "react";
 import WidgetWrapper from "components/WidgetWrapper";
@@ -22,7 +22,7 @@ interface PostWidgetProps {
   picture: string;
   userPicture: {};
   likes: { [userId: string]: boolean };
-  comments: string[];
+  Comments: string[];
 }
 
 export const PostWidget = ({
@@ -34,7 +34,7 @@ export const PostWidget = ({
   picture,
   userPicture,
   likes,
-  comments,
+  Comments,
 }: PostWidgetProps) => {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
@@ -43,13 +43,14 @@ export const PostWidget = ({
   const isLiked = Boolean(likes[loggedInUserId]);
   const likedCount = Object.keys(likes)?.length;
   const [isComments, setIsComments] = useState(false);
+  const [comment, setComment]= useState("")
 
   const { palette } = useTheme();
   const main = palette.neutral.main;
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    const response = await fetch(`http://localhost:3001/posts/${postId}/like`, {
+    const response = await fetch(`/posts/${postId}/like`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -61,9 +62,23 @@ export const PostWidget = ({
     console.log(updatedPost)
     dispatch(setPost({ post: updatedPost }));
   };
+  const writeComment = async()=>{
+    const response = await fetch(`/posts/${postId}/comment`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body:JSON.stringify({"comment":comment})
+    });
+    const updatedPost= await response.json()
+    dispatch(setPost({ post: updatedPost }));
+   
+    
+  }
 
   return (
-    <WidgetWrapper sx={{mt:"2rem"}}>
+    <WidgetWrapper sx={{ mt: "2rem" }}>
       <Friend
         friendId={postUserId}
         name={name}
@@ -101,7 +116,7 @@ export const PostWidget = ({
             <IconButton onClick={() => setIsComments(!isComments)}>
               <ChatBubbleOutlineOutlined />
             </IconButton>
-            <Typography>{comments?.length}</Typography>
+            <Typography>{Comments?.length}</Typography>
           </FlexBetween>
         </FlexBetween>
         <IconButton>
@@ -110,7 +125,31 @@ export const PostWidget = ({
       </FlexBetween>
       {isComments && (
         <Box mt="0.5rem">
-          {comments?.map((comment, i) => (
+          <FlexBetween>
+            <InputBase
+              placeholder="Comment..."
+              onChange={(e) => setComment(e.target.value)}
+              name="comment"
+              sx={{
+                width: "100%",
+                backgroundColor: palette.neutral.light,
+                borderRadius: "5rem",
+                padding: "1rem 2rem",
+                mb: "0.25rem",
+              }}
+            />
+            <Button
+              onClick={writeComment}
+              sx={{
+                color: palette.backgrounds.alt,
+                backgroundColor: palette.primary.main,
+                borderRadius: "3rem",
+              }}
+            >
+              Post
+            </Button>
+          </FlexBetween>
+          {Comments?.map((comment, i) => (
             <Box key={`${name}-${i}`}>
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem", pl: "1rem" }}>

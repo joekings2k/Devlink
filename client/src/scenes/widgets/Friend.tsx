@@ -34,7 +34,7 @@ export const Friend = ({
   const isFriend = friends.find((friend: any) => friend._id === friendId);
   const patchFriend = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${_id}/${friendId}`,
+      `/users/${_id}/${friendId}`,
       {
         method: "PATCH",
         headers: {

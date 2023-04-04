@@ -86,7 +86,7 @@ export const Form = () => {
     formData.append("picture", values.picture.name);
 
     const savedUserResponse = await fetch(
-      "http://localhost:3001/auth/register",
+      "/auth/register",
       {
         method: "POST",
         body: formData,
@@ -101,7 +101,7 @@ export const Form = () => {
 
   const login = async (values: any, onSubmitProps: any) => {
     const loggedInUserResponse = await fetch(
-      "http://localhost:3001/auth/login",
+      "/auth/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

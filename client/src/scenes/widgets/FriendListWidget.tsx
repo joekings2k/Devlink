@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { palette } from "@mui/system";
 
 interface FriendListWidgetProps{
-  userId:string;
+  userId:string | undefined;
 }
 
 export const FriendListWidget = ({userId}:FriendListWidgetProps)=>{
@@ -19,7 +19,7 @@ export const FriendListWidget = ({userId}:FriendListWidgetProps)=>{
 
   const getFriends= async()=>{
     const response= await fetch(
-      `http://localhost:3001/users/${userId}/friends`,
+      `/users/${userId}/friends`,
       {
         method:"Get",
         headers:{Authorization :`Bearer ${token}`}

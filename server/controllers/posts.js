@@ -57,7 +57,6 @@ export const likePost = async (req, res) => {
     const { id } = req.params;
     const { userId } = req.body;
     const post = await Post.findById(id);
-    console.log(post)
     const isLiked = post.likes.has(userId);
   
     if (isLiked) {
@@ -77,3 +76,18 @@ export const likePost = async (req, res) => {
     res.status(404).json({ error: err.message });
   }
 };
+
+export const createComment = async(req,res)=>{
+  try {
+    const {id} = req.params;
+    const {comment}=req.body;  
+    const post = await Post.findById(id)
+
+    post.Comments.push(comment)
+
+    await post.save()
+    res.status(200).json(post);
+  }catch (err){
+    res.status(404).json({ error: err.message });
+  }
+}

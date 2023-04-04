@@ -17,7 +17,7 @@ interface PostMapContent {
   picture: { public_id: string; secure_url: string };
   userPicture: { public_id: string; secure_url: string };
   likes: { [userId: string]: boolean };
-  comments: [];
+  Comments: string[];
 }
 
 export const PostsWidget = ({
@@ -28,8 +28,10 @@ export const PostsWidget = ({
   const Posts = useSelector((state: AppState) => state.posts);
   const token = useSelector((state: AppState) => state.token);
 
+  console.log(Posts)
+
   const getPosts = async () => {
-    const response = await fetch("http://localhost:3001/posts", {
+    const response = await fetch("/posts", {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -39,7 +41,7 @@ export const PostsWidget = ({
 
   const getUserPosts = async () => {
     const response = await fetch(
-      `http://localhost:3001/posts/${userId}/posts`,
+      `/posts/${userId}/posts`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
@@ -71,7 +73,7 @@ export const PostsWidget = ({
           picture,
           userPicture,
           likes,
-          comments,
+          Comments,
         }: PostMapContent) => (
           <PostWidget
             key={_id}
@@ -83,7 +85,7 @@ export const PostsWidget = ({
             picture={picture.secure_url}
             userPicture={userPicture.secure_url}
             likes={likes}
-            comments={comments}
+            Comments={Comments}
           />
         )
       )}

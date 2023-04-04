@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import { upload } from "../multerUpload.js";
 import { verifyToken} from "../middleware/auth.js"
-import { CreatePost, getFeedPosts, getUserPosts, likePost } from "../controllers/posts.js";
+import { createComment, CreatePost, getFeedPosts, getUserPosts, likePost } from "../controllers/posts.js";
 
 const postRoutes = express.Router()
 
@@ -15,7 +15,7 @@ postRoutes.post("/",upload.single("picture"),CreatePost)
 
 /* UPDATE */ 
 postRoutes.patch("/:id/like",verifyToken,likePost)
-// postRoutes.patch("/:id/comment")//functionality to add comment
+postRoutes.patch("/:id/comment",createComment)//functionality to add comment
 
 export default postRoutes
 
